@@ -4,6 +4,7 @@
  * User: MYX
  * Date: 2018/5/22
  * Time: 20:16
+ * 公共文件放在common下的model
  */
 namespace Common\Model;
 
