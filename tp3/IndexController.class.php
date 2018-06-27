@@ -10,7 +10,7 @@ class IndexController extends Controller {
     public function index(){
         //获得参数 signature nonce token timestamp echostr
         $nonce     = $_GET['nonce'];
-        $token     = 'weixin';
+        $token     = 'ceshi';
         $timestamp = $_GET['timestamp'];
         $echostr   = $_GET['echostr'];
         $signature = $_GET['signature'];
@@ -198,7 +198,7 @@ class IndexController extends Controller {
     public function getBaseInfo(){
         //1.获取code
         $appid = 'wxefddd3c3a38565e0';
-        $redirect_url = urlencode('http://120.78.175.133/index/getUserOpenId');
+        $redirect_url = urlencode('');
         $response_type = 'code';
         $scope = 'snsapi_base';
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".$redirect_url."&response_type=".$response_type."&scope=".$scope."&state=123#wechat_redirect";
@@ -216,7 +216,7 @@ class IndexController extends Controller {
     public function getUserDetail(){
         //1.获取code
         $appid = 'wxefddd3c3a38565e0';
-        $redirect_url = urlencode('http://120.78.175.133/index/getUserInfo');
+        $redirect_url = urlencode('');
         $response_type = 'code';
         $scope = 'snsapi_userinfo';
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".$redirect_url."&response_type=".$response_type."&scope=".$scope."&state=123#wechat_redirect";
@@ -463,6 +463,14 @@ class IndexController extends Controller {
         curl_close($curl);
         $arr=json_decode($res,true);
         var_dump($arr);
+        
+        
+        
+        
+        
+        
+        
+        
         echo'<br>';
         echo $arr['result']['city'];
         echo $arr['result']['date'];
