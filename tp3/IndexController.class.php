@@ -239,6 +239,61 @@ class IndexController extends Controller {
         $user = $this->http_url($url,'get');
         var_dump($user);
     }
+    
+    
+    //获取jsapi
+    public function getJsApiTicket(){
+        //1. 获取token
+        if ($_SESSION['jsapi_token_expire_time'] > time() && isset($_SESSION['jsapi_token']) && empty($_SESSION['jsapi_ticket'])){
+            $jsapi_ticket =$_SESSION['jsapi_token'];
+        }else{
+            $access_token = $this->getWxAccessToken();
+            $url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$access_token.'&type=jsapi';
+            $res = $this->http_url($url);
+            $jsapi_ticket = $res['ticket'];
+            $_SESSION['jsapi_ticket'] = $jsapi_ticket;
+            $_SESSION['jsapi_ticket_expire_time'] = time()+7000;
+        }
+        return $jsapi_ticket;
+    }
+    
+    //获取随机数
+    public function getRandCode($num=16){
+        $array = array(
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+            '0','1','2','3','4','5','6','7','8','9'
+        );
+        $tmpstr = '';
+        $max = count($array);
+        for ($i=1;$i<=$num;$i++){
+            $key = rand(0,$max-1);
+            $tmpstr .= $array[$key];
+        }
+        return $tmpstr;
+
+    }
+
+    //js-sdk 分享朋友圈
+    public function shareWx(){
+        //获取票据jsapi_ticket
+        $jsapi_ticket = $this->getJsApiTicket();
+        $timestamp = time();
+        $noncestr = $this->getRandCode();
+
+        $url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+        //2.获取signature
+        $str1 = 'jsapi_ticket='.$jsapi_ticket.'&noncestr='.$noncestr.'&timestamp='.$timestamp.'&url='.$url;
+
+        $signature = sha1($str1);
+
+
+        $this->assign('timestamp',$timestamp);
+        $this->assign('noncestr',$noncestr);
+        $this->assign('signature',$signature);
+        $this->display('Index/share');
+    }
 
 
 
