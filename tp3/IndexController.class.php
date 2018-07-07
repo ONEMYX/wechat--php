@@ -197,7 +197,7 @@ class IndexController extends Controller {
     //网页授权
     public function getBaseInfo(){
         //1.获取code
-        $appid = 'wxefddd3c3a38565e0';
+        $appid = '';
         $redirect_url = urlencode('');
         $response_type = 'code';
         $scope = 'snsapi_base';
@@ -205,8 +205,8 @@ class IndexController extends Controller {
         header('location:'.$url);
     }
     public function getUserOpenId(){
-        $appid ='wxefddd3c3a38565e0';
-        $secret = '9e408ed94a1bbbeae6a2b7f87b0dded7';
+        $appid ='';
+        $secret = '';
         $code = $_GET['code'];
         $grant_type = 'authorization_code';
         $url ="https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$secret."&code=".$code."&grant_type=".$grant_type;
@@ -215,7 +215,7 @@ class IndexController extends Controller {
     }
     public function getUserDetail(){
         //1.获取code
-        $appid = 'wxefddd3c3a38565e0';
+        $appid = '';
         $redirect_url = urlencode('');
         $response_type = 'code';
         $scope = 'snsapi_userinfo';
@@ -223,8 +223,8 @@ class IndexController extends Controller {
         header('location:'.$url);
     }
     public function getUserInfo(){
-        $appid ='wxefddd3c3a38565e0';
-        $secret = '9e408ed94a1bbbeae6a2b7f87b0dded7';
+        $appid ='';
+        $secret = '';
         $code = $_GET['code'];
         var_dump($code);
         $grant_type = 'authorization_code';
@@ -305,8 +305,8 @@ class IndexController extends Controller {
         }else{
             // 如果access_token 不存在或者已经过期，重新获取
             //1.请求url的地址
-            $appid ='wxefddd3c3a38565e0';
-            $appsecret='9e408ed94a1bbbeae6a2b7f87b0dded7';
+            $appid ='';
+            $appsecret='';
             $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$appid.'&secret='.$appsecret;
             $res = $this->http_url($url,'get','json');
             $access_token = $res['access_token'];
